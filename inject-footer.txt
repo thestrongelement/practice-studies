@@ -1,0 +1,55 @@
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+/* get page */
+var spliturl = location.pathname.split(/\/+/g);
+var pagename = spliturl[spliturl.length-1];
+
+if (typeof practice_stories[pagename] != 'undefined') {
+  $('.entry-header').hide();
+  
+  var story = practice_stories[pagename];
+  var items = story.list;
+  var category = story.practice;
+  
+  /* elements */
+  var $banner = $(document.createElement('div')).addClass('bio-banner');
+  var $inner = $(document.createElement('div')).addClass('inner__');
+  var $left = $(document.createElement('div')).addClass('col__');
+  var $right = $(document.createElement('div')).addClass('col__');  
+  var $list = $(document.createElement('ul')).addClass('list__');
+  $.each( items, function(i) { 
+    var $item = $(document.createElement('li')).addClass('item__');
+    $item.html(items[i]);
+    $list.append($item);
+  });
+  var title = $('[data-content-field=title] a').text();
+  var $title = $(document.createElement('h1')).addClass('title__').html(title);
+  var $icon = $(document.createElement('span')).addClass('icon__ '+ category + '--');
+
+
+
+  /* build it */
+  $left.append($icon).append($title);
+  $right.append($list);
+  $inner.append($right).prepend($left);
+  $banner.append($inner);
+
+
+  var $hero = $(document.createElement('div')).addClass('hero-banner');
+  $hero.css('background-image','url("'+ story.image +'")');
+  
+
+
+  $('#siteWrapper').before($banner);
+  $banner.before($hero);
+}
+  
+
+var $feature = $('#feature-section');
+if ($feature.length) {
+  var $target = $feature.find('h2');
+  var category = $target.text().toLowerCase();
+  var $icon = $(document.createElement('span')).addClass('icon__ '+ category + '--');
+  $target.before($icon);
+}
+</script>
